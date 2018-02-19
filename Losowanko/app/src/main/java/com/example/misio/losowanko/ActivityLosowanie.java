@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class ActivityLosowanie extends AppCompatActivity {
 
-    Button buttonDodajOsobe;
-    TableLayout tableOsoby;
-    EditText editTextOsoba;
+    Button buttonDodajOsobe,buttonDodajZadanie;
+    TableLayout tableOsoby,tableZadania;
+    EditText editTextOsoba,editTextZadanie;
     ArrayList<String> listaOsob;
     ArrayList<String> listaZadan;
     @Override
@@ -27,17 +27,29 @@ public class ActivityLosowanie extends AppCompatActivity {
         setContentView(R.layout.activity_losowanie);
 
 
-        buttonDodajOsobe = (Button)findViewById(R.id.buttonDodaj);
+        buttonDodajOsobe = (Button)findViewById(R.id.buttonDodajOsobe);
+        buttonDodajZadanie = (Button)findViewById(R.id.buttonDodajZadanie);
         tableOsoby = (TableLayout)findViewById(R.id.tableOsoby);
+        tableZadania = (TableLayout)findViewById(R.id.tableZadania);
         editTextOsoba = (EditText)findViewById(R.id.editTextOsoba);
+        editTextZadanie = (EditText)findViewById(R.id.editTextZadanie);
         listaOsob = new ArrayList<String>();
         listaZadan = new ArrayList<String>();
         buttonDodajOsobe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(checkField(editTextOsoba)){
-                    addPosition(editTextOsoba);
-                    refreshTable();
+                    addPosition(editTextOsoba,listaOsob);
+                    refreshTable(tableOsoby,listaOsob);
+                }
+            }
+        });
+        buttonDodajZadanie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkField(editTextZadanie)){
+                    addPosition(editTextZadanie,listaZadan);
+                    refreshTable(tableZadania,listaZadan);
                 }
             }
         });
@@ -51,35 +63,35 @@ public class ActivityLosowanie extends AppCompatActivity {
         return true;
     }
 
-    public void addPosition(EditText editText){
-        Log.d("DODAJ OSOBE: ",String.valueOf(editText.getText()));
-        String osoba = String.valueOf(editText.getText());
-        listaOsob.add(osoba);
+    public void addPosition(EditText editText,ArrayList<String> arrayList){
+        Log.d("DODAWANIE POZYCJI: ","DODANO: " + String.valueOf(editText.getText()));
+        String position = String.valueOf(editText.getText());
+        arrayList.add(position);
     }
 
-    public void removePosition(int i){
-        Log.d("USUWANIE","USUNIETO " + String.valueOf(listaOsob.get(i)));
-        listaOsob.remove(i);
-        refreshTable();
+    public void removePosition(int i,ArrayList<String> arrayList,TableLayout tableLayout){
+        Log.d("USUWANIE POZYCJI","USUNIETO " + String.valueOf(arrayList.get(i)));
+        arrayList.remove(i);
+        refreshTable(tableLayout,arrayList);
     }
 
-    public void refreshTable(){
-        tableOsoby.removeAllViews();
-        for (int i=0; i<listaOsob.size();i++){
+    public void refreshTable(final TableLayout tableLayout, final ArrayList<String> arrayList){
+        tableLayout.removeAllViews();
+        for (int i=0; i<arrayList.size();i++){
             TableRow rowOsoba = new TableRow(this);
             Button buttonDelete = new Button(this);
             buttonDelete.setText("Usun");
             rowOsoba.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
             TextView textView = new TextView(this);
-            textView.setText(listaOsob.get(i));
+            textView.setText(arrayList.get(i));
             rowOsoba.addView(textView);
             rowOsoba.addView(buttonDelete);
-            tableOsoby.addView(rowOsoba);
+            tableLayout.addView(rowOsoba);
             final int finalI = i;
             buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    removePosition(finalI);
+                    removePosition(finalI,arrayList,tableLayout);
                 }
             });
         }
