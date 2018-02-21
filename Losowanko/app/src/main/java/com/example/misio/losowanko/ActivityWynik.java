@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class ActivityWynik extends AppCompatActivity {
     private static final String TAG = "ActivityWynik";
     TableLayout tabelaWyniki;
+    TableRow rowWyniki;
     Button buttonPowrot;
 
 
@@ -29,20 +31,22 @@ public class ActivityWynik extends AppCompatActivity {
         HashMap<String,String> wynik = (HashMap<String,String>)intent.getSerializableExtra("map");
         buttonPowrot = (Button)findViewById(R.id.buttonWroc);
         tabelaWyniki = (TableLayout)findViewById(R.id.tableWynik);
-        fillTable(wynik);
+        fillTable(wynik,tabelaWyniki);
 
     }
-    public void fillTable(HashMap<String,String> wynik){
+    public void fillTable(HashMap<String,String> wynik, TableLayout tabelaWyniki){
         for(String key : wynik.keySet()){
-            String keys = key;
-//            String value = entry.getValue().toString();
             String value = wynik.get(key);
             TableRow rowWynik = new TableRow(this);
             rowWynik.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT));
             TextView viewWynik = new TextView(this);
-            viewWynik.setText("Osoba:"+keys+"\n\n"+value);
-            viewWynik.setGravity(View.TEXT_ALIGNMENT_GRAVITY);
+            viewWynik.setText("Osoba:"+key+"\n"+value+"\n\n");
+
             setViewParams(viewWynik);
+            tabelaWyniki.addView(rowWynik);
+            tabelaWyniki.addView(viewWynik);
+
+
 
         }
     }
@@ -52,9 +56,6 @@ public class ActivityWynik extends AppCompatActivity {
         textView.setGravity(View.TEXT_ALIGNMENT_GRAVITY);
         textView.setTextSize(20);
         textView.setBackgroundColor(Color.GRAY);
-        setContentView(textView);
-
-
     }
 
 }

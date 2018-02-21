@@ -2,6 +2,8 @@ package com.example.misio.losowanko;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +30,9 @@ public class ActivityLosowanie extends AppCompatActivity {
     EditText editTextOsoba,editTextZadanie;
     ArrayList<String> listaOsob;
     ArrayList<String> listaZadan;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class ActivityLosowanie extends AppCompatActivity {
         editTextZadanie = (EditText)findViewById(R.id.editTextZadanie);
         listaOsob = new ArrayList<String>();
         listaZadan = new ArrayList<String>();
+        initializeShakeDetection();
+        mock();
 
         //Obsluga klikniec
         buttonDodajOsobe.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +88,30 @@ public class ActivityLosowanie extends AppCompatActivity {
         buttonLosuj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                HashMap wynik = losujZadania(listaZadan,listaOsob);
+                sendResultIntent(wynik);
+            }
+        });
+    }
+
+    public void mock(){
+        listaOsob.add("user1");
+        listaOsob.add("user2");
+        listaZadan.add("ex1");
+        listaZadan.add("ex2");
+        listaZadan.add("ex3");
+        listaZadan.add("ex4");
+    }
+
+    public void initializeShakeDetection(){
+        mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
                 HashMap wynik = losujZadania(listaZadan,listaOsob);
                 sendResultIntent(wynik);
             }
@@ -206,4 +237,17 @@ public class ActivityLosowanie extends AppCompatActivity {
         listToEdit.addAll(listaZadan);
         return listToEdit;
     }
+
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
 }
+
