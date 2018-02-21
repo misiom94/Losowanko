@@ -52,6 +52,7 @@ public class ActivityLosowanie extends AppCompatActivity {
                 if(checkField(editTextOsoba)){
                     addPosition(editTextOsoba,listaOsob);
                     refreshTable(tableOsoby,listaOsob);
+                    editTextOsoba.setText("");
                 }
             }
         });
@@ -61,6 +62,7 @@ public class ActivityLosowanie extends AppCompatActivity {
                 if(checkField(editTextZadanie)){
                     addPosition(editTextZadanie,listaZadan);
                     refreshTable(tableZadania,listaZadan);
+                    editTextZadanie.setText("");
                 }
             }
         });
@@ -146,7 +148,6 @@ public class ActivityLosowanie extends AppCompatActivity {
     }
 
     public void losujZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob){
-
         HashMap<String,StringBuilder> wynik = new HashMap<>();
         int iloscZadan = listaZadan.size();
         int iloscOsob = listaOsob.size();
@@ -160,12 +161,12 @@ public class ActivityLosowanie extends AppCompatActivity {
 
     public HashMap<String,StringBuilder> przydzielZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob, int przydzial){
         HashMap<String,StringBuilder> result = new HashMap<>();
-        ArrayList<String> editableListaZadan = listaZadan;
+        ArrayList<String> editableListaZadan;
+        editableListaZadan = copyListy(listaZadan);
         List<String> przypisaneZadania;
         Collections.shuffle(editableListaZadan);
         for (String osoba:listaOsob) {
             przypisaneZadania = editableListaZadan.subList(0,przydzial);
-
             Log.i(TAG,String.valueOf(przypisaneZadania.size())+ " DLUGOSC LISTY");
             StringBuilder zadania = new StringBuilder();
             for(int i=0;i<przypisaneZadania.size();i++){
@@ -173,13 +174,16 @@ public class ActivityLosowanie extends AppCompatActivity {
             }
             result.put(osoba,zadania);
             Log.i(TAG,result.toString());
-            editableListaZadan.subList(0,przydzial-1).clear();
+            editableListaZadan.subList(0,przydzial).clear();
         }
         return result;
-
     }
 
-
-
-
+    public ArrayList<String> copyListy(ArrayList<String> listaZadan){
+        ArrayList<String> listToEdit = new ArrayList<>();
+        for(int i=0;i<listaZadan.size();i++){
+            listToEdit.add(listaZadan.get(i));
+        }
+        return listToEdit;
+    }
 }

@@ -10,34 +10,30 @@
         android:id="@+id/textViewOsoby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/text_osoby"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonDodajOsobe"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/button_dodaj_osobe"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextOsoba" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="199dp"
-        android:layout_height="170dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="145dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDodajOsobe">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,11 +43,7 @@
             <TableLayout
                 android:id="@+id/tableOsoby"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -74,14 +66,12 @@
 
     <EditText
         android:id="@+id/editTextOsoba"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewOsoby" />
 
@@ -89,47 +79,73 @@
         android:id="@+id/textViewZadania"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/text_zadanie"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDodajOsobe" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextZadanie"
         android:layout_width="140dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewZadania" />
 
     <Button
         android:id="@+id/buttonDodajZadanie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/button_dodaj_zadanie"
-        app:layout_constraintEnd_toStartOf="@+id/scrollView3"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextZadanie" />
+
+    <Button
+        android:id="@+id/buttonZapisz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_zapisz"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <Button
+        android:id="@+id/buttonLosuj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_losuj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+
+    <Button
+        android:id="@+id/buttonWroc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/button_wroc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLosuj" />
 
     <ScrollView
         android:id="@+id/scrollView3"
-        android:layout_width="199dp"
-        android:layout_height="170dp"
+        android:layout_width="145dp"
+        android:layout_height="180dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+        app:layout_constraintTop_toBottomOf="@+id/buttonDodajZadanie">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,41 +175,5 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/buttonZapisz"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/button_zapisz"
-        app:layout_constraintEnd_toEndOf="@+id/buttonDodajZadanie"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDodajZadanie" />
-
-    <Button
-        android:id="@+id/buttonLosuj"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/button_losuj"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/scrollView3"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
-
-    <Button
-        android:id="@+id/buttonWroc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/button_wroc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLosuj" />
 
 </android.support.constraint.ConstraintLayout>
