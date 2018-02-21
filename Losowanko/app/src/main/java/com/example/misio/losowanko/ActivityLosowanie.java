@@ -1,5 +1,7 @@
 package com.example.misio.losowanko;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 
 public class ActivityLosowanie extends AppCompatActivity {
 
-    Button buttonDodajOsobe,buttonDodajZadanie;
+    Button buttonDodajOsobe,buttonDodajZadanie, buttonLosuj, buttonWroc, buttonZapisz;
     TableLayout tableOsoby,tableZadania;
     EditText editTextOsoba,editTextZadanie;
     ArrayList<String> listaOsob;
@@ -26,15 +28,20 @@ public class ActivityLosowanie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_losowanie);
 
-
+        //Deklaracja komponentow
         buttonDodajOsobe = (Button)findViewById(R.id.buttonDodajOsobe);
         buttonDodajZadanie = (Button)findViewById(R.id.buttonDodajZadanie);
+        buttonWroc = (Button)findViewById(R.id.buttonWroc);
+        buttonLosuj = (Button)findViewById(R.id.buttonLosuj);
+        buttonZapisz = (Button)findViewById(R.id.buttonZapisz);
         tableOsoby = (TableLayout)findViewById(R.id.tableOsoby);
         tableZadania = (TableLayout)findViewById(R.id.tableZadania);
         editTextOsoba = (EditText)findViewById(R.id.editTextOsoba);
         editTextZadanie = (EditText)findViewById(R.id.editTextZadanie);
         listaOsob = new ArrayList<String>();
         listaZadan = new ArrayList<String>();
+
+        //Obsluga klikniec
         buttonDodajOsobe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +58,13 @@ public class ActivityLosowanie extends AppCompatActivity {
                     addPosition(editTextZadanie,listaZadan);
                     refreshTable(tableZadania,listaZadan);
                 }
+            }
+        });
+        buttonWroc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buildAllert();
+
             }
         });
     }
@@ -96,4 +110,29 @@ public class ActivityLosowanie extends AppCompatActivity {
             });
         }
     }
+
+    public void buildAllert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Potwierdź wyjście");
+        builder.setMessage("Wyjscie bez zapisu usunie wszystkie dane!");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 }
