@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityLosowanie"></activity>
+        <activity android:name=".ActivityLosowanie" />
+        <activity android:name=".ActivityWynik"></activity>
     </application>
 
 </manifest>

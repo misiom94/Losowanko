@@ -1,6 +1,7 @@
 package com.example.misio.losowanko;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,7 +81,8 @@ public class ActivityLosowanie extends AppCompatActivity {
         buttonLosuj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                losujZadania(listaZadan,listaOsob);
+                HashMap wynik = losujZadania(listaZadan,listaOsob);
+                sendResultIntent(wynik);
             }
         });
     }
@@ -147,20 +150,39 @@ public class ActivityLosowanie extends AppCompatActivity {
         alert.show();
     }
 
-    public void losujZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob){
-        HashMap<String,StringBuilder> wynik = new HashMap<>();
+    public void sendResultIntent(HashMap hashMap){
+        Intent intent = new Intent(this, ActivityWynik.class);
+        intent.putExtra("map", (Serializable)hashMap);
+        startActivity(intent);
+    }
+
+    public HashMap losujZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob){
+        HashMap<String,String> wynik = new HashMap<>();
         int iloscZadan = listaZadan.size();
         int iloscOsob = listaOsob.size();
+        try{
+            if(iloscZadan%iloscOsob==0){
+                int przydzial = iloscZadan/iloscOsob;
+                wynik = przydzielZadania(listaZadan,listaOsob,przydzial);
+            }else{
+                Toast.makeText(this,"Ilosc zadan musi byc podzielna przez ilosc osob!",Toast.LENGTH_SHORT).show();
+            }
+            return wynik;
+        }catch(Exception e){
+            Log.e(TAG,"DZIELENIE PRZEZ 0");
+        }
         if(iloscZadan%iloscOsob==0){
             int przydzial = iloscZadan/iloscOsob;
             wynik = przydzielZadania(listaZadan,listaOsob,przydzial);
         }else{
             Toast.makeText(this,"Ilosc zadan musi byc podzielna przez ilosc osob!",Toast.LENGTH_SHORT).show();
         }
+        return wynik;
+
     }
 
-    public HashMap<String,StringBuilder> przydzielZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob, int przydzial){
-        HashMap<String,StringBuilder> result = new HashMap<>();
+    public HashMap<String,String> przydzielZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob, int przydzial){
+        HashMap<String,String> result = new HashMap<>();
         ArrayList<String> editableListaZadan;
         editableListaZadan = copyListy(listaZadan);
         List<String> przypisaneZadania;
@@ -168,9 +190,9 @@ public class ActivityLosowanie extends AppCompatActivity {
         for (String osoba:listaOsob) {
             przypisaneZadania = editableListaZadan.subList(0,przydzial);
             Log.i(TAG,String.valueOf(przypisaneZadania.size())+ " DLUGOSC LISTY");
-            StringBuilder zadania = new StringBuilder();
+            String zadania = "";
             for(int i=0;i<przypisaneZadania.size();i++){
-                zadania.append(String.valueOf(przypisaneZadania.get(i))+" ");
+                zadania+=String.valueOf(przypisaneZadania.get(i))+" ";
             }
             result.put(osoba,zadania);
             Log.i(TAG,result.toString());
@@ -181,9 +203,7 @@ public class ActivityLosowanie extends AppCompatActivity {
 
     public ArrayList<String> copyListy(ArrayList<String> listaZadan){
         ArrayList<String> listToEdit = new ArrayList<>();
-        for(int i=0;i<listaZadan.size();i++){
-            listToEdit.add(listaZadan.get(i));
-        }
+        listToEdit.addAll(listaZadan);
         return listToEdit;
     }
 }

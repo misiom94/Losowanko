@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">Losowanko</string>
 
-    <string name = "button_rozpocznij">Rozpocznij Losowanko!</string>
-    <string name = "button_wyjdz">Zakończ</string>
-    <string name = "button_dodaj_osobe">Dodaj osobę</string>
-    <string name = "text_osoby">Osoby do losowania</string>
-    <string name = "button_dodaj_zadanie">Dodaj zadanie</string>
-    <string name = "text_zadanie">Zadania do losowania</string>
-    <string name = "button_zapisz">Zapisz losowanie</string>
-    <string name = "button_losuj">Losuj!</string>
-    <string name = "button_wroc">Wróć</string>
+    <string name="button_rozpocznij">Rozpocznij Losowanko!</string>
+    <string name="button_wyjdz">Zakończ</string>
+    <string name="button_dodaj_osobe">Dodaj osobę</string>
+    <string name="text_osoby">Osoby do losowania</string>
+    <string name="button_dodaj_zadanie">Dodaj zadanie</string>
+    <string name="text_zadanie">Zadania do losowania</string>
+    <string name="button_zapisz">Zapisz losowanie</string>
+    <string name="button_losuj">Losuj!</string>
+    <string name="button_wroc">Wróć</string>
+    <string name="text_wynik">WYNIKI LOSOWANIA</string>
 </resources>
