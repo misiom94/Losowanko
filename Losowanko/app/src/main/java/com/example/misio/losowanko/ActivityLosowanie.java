@@ -14,9 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class ActivityLosowanie extends AppCompatActivity {
 
+    private static final String TAG = "ActivityLosowanie";
     Button buttonDodajOsobe,buttonDodajZadanie, buttonLosuj, buttonWroc, buttonZapisz;
     TableLayout tableOsoby,tableZadania;
     EditText editTextOsoba,editTextZadanie;
@@ -63,14 +67,23 @@ public class ActivityLosowanie extends AppCompatActivity {
         buttonWroc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buildAllert();
-
+                if(listaOsob.size()>0 || listaZadan.size()>0){
+                    buildAllert();
+                }else{
+                    finish();
+                }
+            }
+        });
+        buttonLosuj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                losujZadania(listaZadan,listaOsob);
             }
         });
     }
 
     public boolean checkField(TextView textView){
-        if(textView.getText().toString()==""){
+        if(textView.getText().toString().equals("")){
             Toast.makeText(this, "Zadne pole nie moze byc puste!",Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -116,15 +129,12 @@ public class ActivityLosowanie extends AppCompatActivity {
         builder.setTitle("Potwierdź wyjście");
         builder.setMessage("Wyjscie bez zapisu usunie wszystkie dane!");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
             public void onClick(DialogInterface dialog, int which) {
                 finish();
                 dialog.dismiss();
             }
         });
-
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Do nothing
@@ -134,5 +144,42 @@ public class ActivityLosowanie extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    public void losujZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob){
+
+        HashMap<String,StringBuilder> wynik = new HashMap<>();
+        int iloscZadan = listaZadan.size();
+        int iloscOsob = listaOsob.size();
+        if(iloscZadan%iloscOsob==0){
+            int przydzial = iloscZadan/iloscOsob;
+            wynik = przydzielZadania(listaZadan,listaOsob,przydzial);
+        }else{
+            Toast.makeText(this,"Ilosc zadan musi byc podzielna przez ilosc osob!",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public HashMap<String,StringBuilder> przydzielZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob, int przydzial){
+        HashMap<String,StringBuilder> result = new HashMap<>();
+        ArrayList<String> editableListaZadan = listaZadan;
+        List<String> przypisaneZadania;
+        Collections.shuffle(editableListaZadan);
+        for (String osoba:listaOsob) {
+            przypisaneZadania = editableListaZadan.subList(0,przydzial);
+
+            Log.i(TAG,String.valueOf(przypisaneZadania.size())+ " DLUGOSC LISTY");
+            StringBuilder zadania = new StringBuilder();
+            for(int i=0;i<przypisaneZadania.size();i++){
+                zadania.append(String.valueOf(przypisaneZadania.get(i))+" ");
+            }
+            result.put(osoba,zadania);
+            Log.i(TAG,result.toString());
+            editableListaZadan.subList(0,przydzial-1).clear();
+        }
+        return result;
+
+    }
+
+
+
 
 }
