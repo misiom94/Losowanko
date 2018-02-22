@@ -52,7 +52,8 @@ public class ActivityLosowanie extends AppCompatActivity {
         listaOsob = new ArrayList<String>();
         listaZadan = new ArrayList<String>();
         initializeShakeDetection();
-        mock();
+        validateStartPermission();
+//        mock();
 
         //Obsluga klikniec
         buttonDodajOsobe.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +63,7 @@ public class ActivityLosowanie extends AppCompatActivity {
                     addPosition(editTextOsoba,listaOsob);
                     refreshTable(tableOsoby,listaOsob);
                     editTextOsoba.setText("");
+                    validateStartPermission();
                 }
             }
         });
@@ -72,6 +74,7 @@ public class ActivityLosowanie extends AppCompatActivity {
                     addPosition(editTextZadanie,listaZadan);
                     refreshTable(tableZadania,listaZadan);
                     editTextZadanie.setText("");
+                    validateStartPermission();
                 }
             }
         });
@@ -88,8 +91,12 @@ public class ActivityLosowanie extends AppCompatActivity {
         buttonLosuj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap wynik = losujZadania(listaZadan,listaOsob);
-                sendResultIntent(wynik);
+                if(validateStartPermission()){
+                    HashMap wynik = losujZadania(listaZadan,listaOsob);
+                    if(wynik!=null){
+                        sendResultIntent(wynik);
+                    }
+                }
             }
         });
     }
@@ -113,7 +120,10 @@ public class ActivityLosowanie extends AppCompatActivity {
             @Override
             public void onShake(int count) {
                 HashMap wynik = losujZadania(listaZadan,listaOsob);
-                sendResultIntent(wynik);
+                if(wynik!=null){
+                    sendResultIntent(wynik);
+                }
+//                sendResultIntent(wynik);
             }
         });
     }
@@ -144,13 +154,14 @@ public class ActivityLosowanie extends AppCompatActivity {
             TableRow rowOsoba = new TableRow(this);
             Button buttonDelete = new Button(this);
             buttonDelete.setText("Usun");
-            rowOsoba.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            rowOsoba.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             TextView textView = new TextView(this);
             textView.setText(arrayList.get(i));
             rowOsoba.addView(textView);
             rowOsoba.addView(buttonDelete);
             tableLayout.addView(rowOsoba);
             final int finalI = i;
+            validateStartPermission();
             buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,6 +169,14 @@ public class ActivityLosowanie extends AppCompatActivity {
                 }
             });
         }
+    }
+    public boolean validateStartPermission(){
+        if(listaZadan.size()==0 || listaOsob.size()==0){
+            buttonLosuj.setEnabled(false);
+            return false;
+        }
+        buttonLosuj.setEnabled(true);
+        return true;
     }
 
     public void buildAllert(){
@@ -191,25 +210,14 @@ public class ActivityLosowanie extends AppCompatActivity {
         HashMap<String,String> wynik = new HashMap<>();
         int iloscZadan = listaZadan.size();
         int iloscOsob = listaOsob.size();
-        try{
-            if(iloscZadan%iloscOsob==0){
-                int przydzial = iloscZadan/iloscOsob;
-                wynik = przydzielZadania(listaZadan,listaOsob,przydzial);
-            }else{
-                Toast.makeText(this,"Ilosc zadan musi byc podzielna przez ilosc osob!",Toast.LENGTH_SHORT).show();
-            }
-            return wynik;
-        }catch(Exception e){
-            Log.e(TAG,"DZIELENIE PRZEZ 0");
-        }
         if(iloscZadan%iloscOsob==0){
             int przydzial = iloscZadan/iloscOsob;
             wynik = przydzielZadania(listaZadan,listaOsob,przydzial);
+            return wynik;
         }else{
             Toast.makeText(this,"Ilosc zadan musi byc podzielna przez ilosc osob!",Toast.LENGTH_SHORT).show();
+            return null;
         }
-        return wynik;
-
     }
 
     public HashMap<String,String> przydzielZadania(ArrayList<String> listaZadan, ArrayList<String> listaOsob, int przydzial){
