@@ -119,11 +119,10 @@ public class ActivityLosowanie extends AppCompatActivity {
 
             @Override
             public void onShake(int count) {
-                HashMap wynik = losujZadania(listaZadan,listaOsob);
-                if(wynik!=null){
+                if(validateStartPermission()){
+                    HashMap wynik = losujZadania(listaZadan,listaOsob);
                     sendResultIntent(wynik);
                 }
-//                sendResultIntent(wynik);
             }
         });
     }
@@ -173,6 +172,7 @@ public class ActivityLosowanie extends AppCompatActivity {
     public boolean validateStartPermission(){
         if(listaZadan.size()==0 || listaOsob.size()==0){
             buttonLosuj.setEnabled(false);
+            Toast.makeText(this,"Dane na jednej z list nie są uzupełnione!",Toast.LENGTH_SHORT).show();
             return false;
         }
         buttonLosuj.setEnabled(true);
