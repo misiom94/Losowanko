@@ -35,7 +35,7 @@ public class ActivityWynik extends AppCompatActivity {
 
         Intent intent = getIntent();
         HashMap<String,String> wynik = (HashMap<String,String>)intent.getSerializableExtra("map");
-        buttonPowrot = (Button)findViewById(R.id.buttonWroc);
+        buttonPowrot = (Button)findViewById(R.id.buttonPowrot);
         tabelaWyniki = (TableLayout)findViewById(R.id.tableWynik);
         videoView = (VideoView)findViewById(R.id.videoView);
         videoView.setVideoPath("android.resource://"+ getPackageName()+"/"+ R.raw.losowanie);
@@ -49,6 +49,13 @@ public class ActivityWynik extends AppCompatActivity {
         });
         fillTable(wynik,tabelaWyniki);
         initializeShakeDetection();
+
+        buttonPowrot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
     }

@@ -8,10 +8,11 @@ public class Zadanie {
 
     private String nazwa;
 
-    public Zadanie(String nazwa) {
+    public Zadanie() {
+    }
+    public Zadanie(String nazwa){
         this.nazwa = nazwa;
     }
-
     public String getNazwa() {
         return nazwa;
     }

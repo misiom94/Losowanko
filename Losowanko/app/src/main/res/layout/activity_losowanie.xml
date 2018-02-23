@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/textViewOsoby"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/text_osoby"
@@ -29,12 +29,13 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="145dp"
-        android:layout_height="180dp"
+        android:layout_height="220dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:scrollbars="horizontal|vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDodajOsobe">
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -72,7 +73,7 @@
     <EditText
         android:id="@+id/editTextOsoba"
         android:layout_width="140dp"
-        android:layout_height="45dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -83,7 +84,7 @@
     <TextView
         android:id="@+id/textViewZadania"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/text_zadanie"
@@ -93,7 +94,7 @@
     <EditText
         android:id="@+id/editTextZadanie"
         android:layout_width="140dp"
-        android:layout_height="45dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -104,7 +105,7 @@
     <Button
         android:id="@+id/buttonDodajZadanie"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         android:text="@string/button_dodaj_zadanie"
@@ -114,9 +115,9 @@
     <Button
         android:id="@+id/buttonZapisz"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="72dp"
         android:text="@string/button_zapisz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
@@ -124,9 +125,9 @@
     <Button
         android:id="@+id/buttonLosuj"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginTop="72dp"
         android:text="@string/button_losuj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
@@ -134,35 +135,38 @@
     <Button
         android:id="@+id/buttonWroc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="@string/button_wroc"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLosuj" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonZapisz" />
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="145dp"
-        android:layout_height="180dp"
+        android:layout_height="220dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDodajZadanie">
+
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TableLayout
                     android:id="@+id/tableZadania"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </TableLayout>
+                    android:layout_height="match_parent"></TableLayout>
             </LinearLayout>
         </HorizontalScrollView>
     </ScrollView>

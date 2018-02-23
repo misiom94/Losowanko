@@ -8,7 +8,9 @@ public class Osoba {
 
     private String nazwa;
 
-    public Osoba(String nazwa) {
+    public Osoba() {
+    }
+    public Osoba(String nazwa){
         this.nazwa = nazwa;
     }
 

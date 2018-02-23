@@ -2,6 +2,7 @@ package com.example.misio.losowanko;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -48,6 +49,10 @@ public class Database extends SQLiteOpenHelper{
             "(" + LOSOWANIE_ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
             OSOBA_ID_FK + "INTEGER FOREIGN KEY REFERENCES " + TABLE_OSOBY + "(" + OSOBA_ID + ")" +
             ZADANIE_ID_FK + "INTEGER FOREIGN KEY REFERENCES " + TABLE_ZADANIA + "(" + ZADANIE_ID + ");";
+//    private final static String tableLosowania = "CREATE TABLE " + TABLE_LOSOWANIA +
+//            "(" + LOSOWANIE_ID + "INTEGER PRIMARY KEY," +
+//            OSOBA_NAZWA + "TEXT " +
+//            ZADANIE_NAZWA + "TEXT );";
 
 
     public Database(Context context) {
@@ -80,9 +85,27 @@ public class Database extends SQLiteOpenHelper{
     public boolean addZadanie(Zadanie zadanie){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ZADANIE_NAZWA,zadanie.getNazwa());
+        values.put(ZADANIE_NAZWA, zadanie.getNazwa());
         Log.i(TAG,"Dodano zadanie: " + zadanie.getNazwa());
         long result = db.insert(TABLE_ZADANIA,null,values);
         return result != -1;
     }
+
+    public int getLastId(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT MAX("+LOSOWANIE_ID+") FROM "+TABLE_LOSOWANIA;
+        Cursor data = db.rawQuery(query,null);
+        int id = data.getInt(data.getColumnIndex(LOSOWANIE_ID));
+        Log.i(TAG,"LAST ID: "+data);
+        return id;
+    }
+
+    public Cursor pobierzOsoby() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_OSOBY;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
+
 }

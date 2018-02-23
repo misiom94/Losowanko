@@ -2,6 +2,7 @@ package com.example.misio.losowanko;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,7 @@ public class ActivityLosowanie extends AppCompatActivity {
 
     private static final String TAG = "ActivityLosowanie";
     Button buttonDodajOsobe,buttonDodajZadanie, buttonLosuj, buttonWroc, buttonZapisz;
+    Database db;
     TableLayout tableOsoby,tableZadania;
     EditText editTextOsoba,editTextZadanie;
     ArrayList<String> listaOsob;
@@ -92,9 +94,16 @@ public class ActivityLosowanie extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(validateStartPermission()){
-                    HashMap wynik = losujZadania(listaZadan,listaOsob);
-                    if(wynik!=null){
-                        sendResultIntent(wynik);
+                    if(listaZadan.size()>=listaOsob.size()){
+                        HashMap wynik = losujZadania(listaZadan,listaOsob);
+                        if(wynik!=null){
+                            sendResultIntent(wynik);
+                        }
+                    }else{
+                        HashMap wynik = losujZadania(listaOsob,listaZadan);
+                        if(wynik!=null){
+                            sendResultIntent(wynik);
+                        }
                     }
                 }
             }
@@ -104,10 +113,16 @@ public class ActivityLosowanie extends AppCompatActivity {
     public void mock(){
         listaOsob.add("user1");
         listaOsob.add("user2");
+        listaOsob.add("user3");
+        listaOsob.add("user4");
+        listaOsob.add("user5");
+        listaOsob.add("user6");
         listaZadan.add("ex1");
         listaZadan.add("ex2");
         listaZadan.add("ex3");
-        listaZadan.add("ex4");
+        listaZadan.add("ex1");
+        listaZadan.add("ex2");
+        listaZadan.add("ex3");
     }
 
     public void initializeShakeDetection(){
@@ -125,6 +140,20 @@ public class ActivityLosowanie extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void saveDataToDb(ArrayList listaOsob, ArrayList listaZadan) {
+
+        db = new Database(this);
+        int id = db.getLastId();
+        Log.i(TAG, String.valueOf(id));
+        for (int i = 0; i < listaOsob.size(); i++) {
+            db.addOsoba(new Osoba((String) listaOsob.get(i)));
+        }
+        for(int i = 0;i < listaZadan.size();i++){
+            db.addZadanie(new Zadanie((String) listaZadan.get(i)));
+        }
+
     }
 
     public boolean checkField(TextView textView){
