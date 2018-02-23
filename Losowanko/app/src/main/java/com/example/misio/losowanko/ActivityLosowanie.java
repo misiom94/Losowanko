@@ -52,8 +52,8 @@ public class ActivityLosowanie extends AppCompatActivity {
         listaOsob = new ArrayList<String>();
         listaZadan = new ArrayList<String>();
         initializeShakeDetection();
-        validateStartPermission();
-//        mock();
+//        validateStartPermission();
+        mock();
 
         //Obsluga klikniec
         buttonDodajOsobe.setOnClickListener(new View.OnClickListener() {

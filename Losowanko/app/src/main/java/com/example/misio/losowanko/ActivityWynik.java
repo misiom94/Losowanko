@@ -4,24 +4,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ActivityWynik extends AppCompatActivity {
     private static final String TAG = "ActivityWynik";
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
+    VideoView videoView;
     TableLayout tabelaWyniki;
     TableRow rowWyniki;
     Button buttonPowrot;
@@ -36,7 +37,18 @@ public class ActivityWynik extends AppCompatActivity {
         HashMap<String,String> wynik = (HashMap<String,String>)intent.getSerializableExtra("map");
         buttonPowrot = (Button)findViewById(R.id.buttonWroc);
         tabelaWyniki = (TableLayout)findViewById(R.id.tableWynik);
+        videoView = (VideoView)findViewById(R.id.videoView);
+        videoView.setVideoPath("android.resource://"+ getPackageName()+"/"+ R.raw.losowanie);
+        videoView.start();
+
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                ((ViewManager)videoView.getParent()).removeView(videoView);
+            }
+        });
         fillTable(wynik,tabelaWyniki);
+        initializeShakeDetection();
 
 
     }
@@ -48,7 +60,7 @@ public class ActivityWynik extends AppCompatActivity {
             layoutParams.bottomMargin = 10;
             rowWynik.setLayoutParams(layoutParams);
             TextView viewWynik = new TextView(this);
-            viewWynik.setText("Osoba:"+key+"\n"+value+"\n\n");
+            viewWynik.setText(key+"\n"+value+"\n\n");
             setViewParams(viewWynik);
             tabelaWyniki.addView(rowWynik);
             tabelaWyniki.addView(viewWynik);
