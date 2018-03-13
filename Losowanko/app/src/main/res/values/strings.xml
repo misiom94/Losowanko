@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Losowanko</string>
 
-    <string name="button_rozpocznij">Rozpocznij Losowanko!</string>
+    <string name="button_rozpocznij">Start!</string>
     <string name="button_wyjdz">Zakończ</string>
     <string name="button_dodaj_osobe">Dodaj osobę</string>
     <string name="text_osoby">Osoby do losowania</string>
