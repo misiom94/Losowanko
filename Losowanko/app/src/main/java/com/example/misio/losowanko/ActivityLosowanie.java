@@ -181,7 +181,9 @@ public class ActivityLosowanie extends AppCompatActivity {
         for (int i=0; i<arrayList.size();i++){
             TableRow rowOsoba = new TableRow(this);
             Button buttonDelete = new Button(this);
-            buttonDelete.setText("Usun");
+            buttonDelete.setBackgroundResource(R.drawable.remove);
+            //buttonDelete.setText("Usun");
+            buttonDelete.setLayoutParams(new TableRow.LayoutParams(120,120));
             rowOsoba.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
             TextView textView = new TextView(this);
             textView.setText(arrayList.get(i));
